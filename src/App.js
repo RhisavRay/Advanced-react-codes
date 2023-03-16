@@ -1,6 +1,6 @@
 import "./App.css";
 
-import DessertsList from "./DessertsList";
+import DessertsList from "./components/DessertsList";
 
 const desserts = [
   {
