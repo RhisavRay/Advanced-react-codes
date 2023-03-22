@@ -16,11 +16,11 @@ function App()
   const isFormValid = () =>
   {
     return(
-      fname && validateEmail(email) && password.value.length >= 8 && role != "role"
+      fname && password.value.length >= 8 && role != "role"
     )
   }
 
-  const handleSubmit = () =>
+  const handleSubmit = (e) =>
   {
     e.preventDefault()
     alert("Account Created Successfully!")
@@ -80,8 +80,8 @@ function App()
             id="password"
             name="password"
             value={password.value}
-            onChange={e => setPassword(...password, value: e.target.value)}
-            onBlur={() => setPassword(...password, isTouched: true)}/>
+            onChange={e => setPassword({...password, value: e.target.value})}
+            onBlur={() => setPassword({...password, isTouched: true})}/>
             <br/>
             {password.isTouched && password.value.length < 8 ? (<PasswordErrorMessage/>) : null}
           </div>  
