@@ -1,52 +1,29 @@
 import "./App.css";
 import { useState } from "react";
 
-const ToDo = props =>
-{
-  <tr>
-    <td>
-      <label>{props.id}</label>
-    </td>
-    <td>
-      <input/>
-    </td>
-    <td>
-      <labe>{props.createdAt}</labe>
-    </td>
-  </tr>
-}
-
 function App()
 {
-  const [todos, setTodos] = useState([
-    {
-      id: 'todo1',
-      createdAt: '18:00'
-    },
-    {
-      id: 'todo2',
-      createdAt: '20:30'
-    }
-  ])
+  const [name, setName] = useState('')
 
-  const reverseOrder = () =>
+  const handleSubmit = (e) =>
   {
-    setTodos([...todos].reverse())
+    e.preventDefault()
+    console.log(`Form was submtted successfully! Welcome ${name}`)
+    setName('')
   }
 
   return(
-    <div>
-      <button onClick={reverseOrder}>Reverse</button>
-      <table>
-        <tbody>
-          {
-            todos.map((todo, index) =>
-            {
-              <ToDo key={todo.id} id={todo.id} createdAt={todo.createdAt}/>
-            })
-          }
-        </tbody>
-      </table>
+    <div className="App">
+      <form onSubmit={handleSubmit}>
+        <fieldset>
+          <legend>Forms with React.js</legend>
+          <div className="Field">
+            <label htmlFor="name">Name: </label>
+            <input id="name" type='text' placeholder="Name..." name="name" value={name} onChange={e => setName(e.target.value)}/>
+          </div>
+          <button disabled={!name} type="submit">Submit</button>
+        </fieldset>
+      </form>
     </div>
   )
 }
