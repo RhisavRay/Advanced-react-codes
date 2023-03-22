@@ -1,36 +1,102 @@
 import "./App.css";
 import { useState } from "react";
+import PasswordErrorMessage from "./components/PasswordErrorMessage";
 
 function App()
 {
-  const [score, setScore] = useState("10")
-  const [comment, setComment] = useState("")
+  const [fname, setFname] = useState("")
+  const [lname, setLname] = useState("")
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState({
+    value: "",
+    isTouched: false
+  })
+  const [role, setRole] = useState("role")
 
-  const handleSubmit = (e) =>
+  const isFormValid = () =>
+  {
+    return(
+      fname && validateEmail(email) && password.value.length >= 8 && role != "role"
+    )
+  }
+
+  const handleSubmit = () =>
   {
     e.preventDefault()
-    console.log(`Thank you for your feedback. You have given us a score of ${score}⭐!`)
-    setScore("10")
-    setComment("")
+    alert("Account Created Successfully!")
+    clearForm()
+  }
+
+  const clearForm = () =>
+  {
+    setFname("")
+    setLname("")
+    setEmail("")
+    setPassword({
+      value: "",
+      isTouched: false
+    })
+    setRole("role")
   }
 
   return(
-    <div className="App">
+    <div>
       <form onSubmit={handleSubmit}>
         <fieldset>
-          <legend>Feedback Form form Little Lemon</legend>
-          <div className="Field">
-            <label>Rate the food</label>
-            <br></br>
-            <input type='range' min='1' max='10' value={score} onChange={e => setScore(e.target.value)}/>
-            <label>{score}⭐</label>
+          <legend>
+            <h1>Sign Up</h1>
+          </legend>
+
+          <div className="field">
+            <label htmlFor="fname">First Name <sup>*</sup></label>
+            <br/>
+            <input type='text' placeholder="First Name" id="fname" name="fname" value={fname} onChange={e => setFname(e.target.value)}/>
           </div>
-          <div className="Field">
-            <label htmlFor="comment">Additional comments</label>
-            <br></br>
-            <textarea id="comment" placeholder="Comments please..." value={comment} onChange={e => setComment(e.target.value)}/>
+
+          <div className="field">
+            <label htmlFor="lname">Last Name</label>
+            <br/>
+            <input type='text' placeholder="Last Name" id="lname" name="lname" value={lname} onChange={e => setLname(e.target.value)}/>
           </div>
-          <button disabled={!comment} type="submit">Submit</button>
+
+          <div className="field">
+            <label htmlFor="email">Email address <sup>*</sup></label>
+            <br/>
+            <input
+            type='email'
+            placeholder="Email address"
+            id="email"
+            name="email"
+            value={email}
+            onChange={e => setEmail(e.target.value)}/>
+          </div>
+
+          <div className="field">
+            <label htmlFor="password">Password <sup>*</sup></label>
+            <br/>
+            <input
+            type='password'
+            placeholder="Password"
+            id="password"
+            name="password"
+            value={password.value}
+            onChange={e => setPassword(...password, value: e.target.value)}
+            onBlur={() => setPassword(...password, isTouched: true)}/>
+            <br/>
+            {password.isTouched && password.value.length < 8 ? (<PasswordErrorMessage/>) : null}
+          </div>  
+
+          <div className="field">
+            <label>Role <sup>*</sup></label>
+            <br/>
+            <select value={role} onChange={e => setRole(e.target.value)}>
+              <option value="role">Role</option>
+              <option value="indivisual">Indivisual</option>
+              <option value="business">Business</option>
+            </select>
+          </div>
+
+          <button type="submit" disabled={!isFormValid()}>Create Account</button>
         </fieldset>
       </form>
     </div>
