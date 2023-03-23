@@ -48,7 +48,7 @@ function App()
           </legend>
 
           <div className="field">
-            <label htmlFor="fname">First Name <sup>*</sup></label>
+            <label htmlFor="fname">First Name<sup>*</sup></label>
             <br/>
             <input type='text' placeholder="First Name" id="fname" name="fname" value={fname} onChange={e => setFname(e.target.value)}/>
           </div>
@@ -60,7 +60,7 @@ function App()
           </div>
 
           <div className="field">
-            <label htmlFor="email">Email address <sup>*</sup></label>
+            <label htmlFor="email">Email address<sup>*</sup></label>
             <br/>
             <input
             type='email'
@@ -72,7 +72,7 @@ function App()
           </div>
 
           <div className="field">
-            <label htmlFor="password">Password <sup>*</sup></label>
+            <label htmlFor="password">Password<sup>*</sup></label>
             <br/>
             <input
             type='password'
@@ -87,7 +87,7 @@ function App()
           </div>  
 
           <div className="field">
-            <label>Role <sup>*</sup></label>
+            <label>Role<sup>*</sup></label>
             <br/>
             <select value={role} onChange={e => setRole(e.target.value)}>
               <option value="role">Role</option>
