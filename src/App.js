@@ -3,27 +3,29 @@ import { useState, useEffect } from "react";
 
 function App()
 {
-  const [toggle, setToggle] = useState(false)
+  const [user, setUser] = useState([])
 
-  function clickHandler()
+  const fetchData = () =>
   {
-    setToggle(!toggle)
+    fetch("https://randomuser.me/api/?results=1")
+    .then((response) => response.json())
+    .then((data) => setUser(data))
   }
 
-  useEffect(() => {
-    document.title = toggle ? "Welcome to Little Lemon" : "Using the useEffect hook"
-  }, [toggle])
+  useEffect(() =>
+  {
+    fetchData()
+  }, [user])
 
-  return(
-    <div>
-      <h1>Using the useEffect hook</h1>
-      <button onClick={clickHandler}>
-        Toggle Message
-      </button>
-      {
-        toggle && <h2>Welcome to Little Lemon</h2>
-      }
+  return Object.keys(user).length > 0 ? (
+    <div style={{padding: '40px'}}>
+      <h1>Customer Data:</h1>
+      <h2>Name: {user.result[0].name.first}</h2>
+      <img src={user.result[0].picture.large} alt=""/>
     </div>
+  ) : (
+    <h1>Data pending...</h1>
+
   )
 }
 
