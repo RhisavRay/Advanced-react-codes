@@ -1,31 +1,32 @@
 import "./App.css";
-import { useState, useEffect } from "react";
+import { useReducer } from "react";
 
 function App()
 {
-  const [user, setUser] = useState([])
-
-  const fetchData = () =>
+  const reduce = (wallet, action) =>
   {
-    fetch("https://randomuser.me/api/?results=1")
-    .then((response) => response.json())
-    .then((data) => setUser(data))
+    if(action.type === "buy") return {money: wallet.money - 10}
+    if(action.type === "sell") return {money: wallet.money + 10}
+    if(action.type === "celebrity") return {money: wallet.money + 5000}
   }
 
-  useEffect(() =>
-  {
-    fetchData()
-  }, [user])
+  const [wallet, setWallet] = useReducer(reduce, {money: 100})
 
-  return Object.keys(user).length > 0 ? (
-    <div style={{padding: '40px'}}>
-      <h1>Customer Data:</h1>
-      <h2>Name: {user.result[0].name.first}</h2>
-      <img src={user.result[0].picture.large} alt=""/>
+  return(
+    <div>
+      <h1>Wallet: {wallet.money}</h1>
+      <div>
+        <button onClick={() => setWallet({type: "buy"})}>
+          Buy ingredients
+        </button>
+        <button onClick={() => setWallet({type: "sell"})}>
+          Sell a meal
+        </button>
+        <button onClick={() => setWallet({type: "celebrity"})}>
+          Celebrity visit
+        </button>
+      </div>
     </div>
-  ) : (
-    <h1>Data pending...</h1>
-
   )
 }
 
