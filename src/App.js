@@ -1,36 +1,27 @@
 import "./App.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function App()
 {
-  const [giftCard, setGiftCard] = useState(
-    {
-      firstName: "Jennifer",
-      lastName: "Smith",
-      text: "Free dinner for 4 guests",
-      valid: true,
-      instructions: "To use your coupon, click the button below."
-    }
-  )
+  const [toggle, setToggle] = useState(false)
 
-  function spendGiftCard()
+  function clickHandler()
   {
-    setGiftCard({...giftCard,
-      text: "Your coupon has been used.",
-      instructions: "Please visit our restaurant to renew your gift card",
-      valid: false})
+    setToggle(!toggle)
   }
 
+  useEffect(() => {
+    document.title = toggle ? "Welcome to Little Lemon" : "Using the useEffect hook"
+  }, [toggle])
+
   return(
-    <div style={{padding: '40px'}}>
-      <h1>Gift Card Page</h1>
-      <h2>Customer: {giftCard.firstName} {giftCard.lastName}</h2>
-      <h3>{giftCard.text}</h3>
-      <p>{giftCard.instructions}</p>
+    <div>
+      <h1>Using the useEffect hook</h1>
+      <button onClick={clickHandler}>
+        Toggle Message
+      </button>
       {
-        giftCard.valid && <button onClick={spendGiftCard}>
-          Spend Gift Card
-        </button>
+        toggle && <h2>Welcome to Little Lemon</h2>
       }
     </div>
   )
