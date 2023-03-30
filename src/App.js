@@ -1,62 +1,23 @@
-import { useEffect, useRef, useState } from "react";
 import "./App.css";
-
+import { RadioGroup, RadioOption } from "./components";
+import { useState } from "react";
 
 function App()
 {
-  const [day, setDay] = useState("Monday")
-
-  const prevDay = usePrevious(day)
-
-  const getNextDay = () =>
-  {
-    if(day === "Monday")
-    {
-      setDay("Tuesday")
-    }
-    else if(day === "Tuesday")
-    {
-      setDay("Wednesday")
-    }
-    else if(day === "Wednesday")
-    {
-      setDay("Thursday")
-    }
-    else if(day === "Thursday")
-    {
-      setDay("Friday")
-    }
-    else if(day === "Friday")
-    {
-      setDay("Monday")
-    }
-  }
-
-  function usePrevious(val)
-  {
-    const ref = useRef()
-
-    useEffect(() => {
-      ref.current = val
-    }, [val])
-
-    return ref.current
-  }
+  const [selected, setSelected] = useState("")
 
   return(
-    <div style={{padding: '40px'}}>
-      <h1>
-        Today is {day}
-        <br/>
-        {
-          prevDay && (<span>Previous work day was: {prevDay}</span>)
-        }
-      </h1>
-      <button onClick={getNextDay}>
-        Get next day
-      </button>
+    <div>
+      <h2>How did you hear about Little Lemon?</h2>
+      <RadioGroup onChange={setSelected} selected={selected}>
+        <RadioOption value="social_media">Social Media</RadioOption>
+        <RadioOption value="friends">Friends</RadioOption>
+        <RadioOption value="advertisements">Advertisements</RadioOption>
+        <RadioOption value="other">Other</RadioOption>
+      </RadioGroup>
+      <button disabled={!selected}>Submit</button>
     </div>
   )
 }
-
+ 
 export default App
