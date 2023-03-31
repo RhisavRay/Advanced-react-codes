@@ -1,9 +1,9 @@
 import { fireEvent, render, screen } from '@testing-library/react';
-import FeedbackForm from './App';
+import FeedbackForm from './components/FeedbackForm';
 
 describe("Feedback Form", () =>
 {
-  test("Submission is disabled if score is less than 5 and there is no feedback provided", () =>
+  test("Submission will be disabld if score is less than 5 and there is no feedback provided", () =>
   {
     const handleSubmit = jest.fn()
     render(<FeedbackForm onSubmit={handleSubmit}/>)
