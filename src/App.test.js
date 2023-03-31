@@ -1,8 +1,20 @@
-import { render, screen } from '@testing-library/react';
-import App from './App';
+import { fireEvent, render, screen } from '@testing-library/react';
+import FeedbackForm from './App';
 
-test("Renders a link that points to Little Lemon webpage", () => {
-  render(<App />);
-  const linkElement = screen.getByText("Little Lemon Restaurant");
-  expect(linkElement).toBeInTheDocument();
-});
+describe("Feedback Form", () =>
+{
+  test("Submission is disabled if score is less than 5 and there is no feedback provided", () =>
+  {
+    const handleSubmit = jest.fn()
+    render(<FeedbackForm onSubmit={handleSubmit}/>)
+
+    const rangeInput = screen.getAllByLabelText(/Score:/)
+    fireEvent.change(rangeInput, { target: { value: "4" } })
+
+    const submitButton = screen.getByRole("button")
+    fireEvent.click(submitButton)
+
+    expect(handleSubmit).not.toHaveBeenCalled()
+    expect(submitButton).toHaveAttribute("disabled")
+  })
+})
